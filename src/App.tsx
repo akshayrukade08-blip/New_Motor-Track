@@ -24,6 +24,9 @@ import Reports from './components/Reports';
 import NotificationDropdown from './components/NotificationDropdown';
 import ProfileDropdown from './components/ProfileDropdown';
 import DatabaseStatus from './components/DatabaseStatus';
+import CreateCompanyModal from './components/CreateCompanyModal';
+import CreateJobModal from './components/CreateJobModal';
+import CreateMotorModal from './components/CreateMotorModal';
 
 type ActiveView = 'dashboard' | 'companies' | 'motors' | 'jobs' | 'invoices' | 'warranties' | 'reports';
 
@@ -31,6 +34,9 @@ function App() {
   const [activeView, setActiveView] = useState<ActiveView>('dashboard');
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [showDatabaseStatus, setShowDatabaseStatus] = useState(false);
+  const [showCreateCompanyModal, setShowCreateCompanyModal] = useState(false);
+  const [showCreateJobModal, setShowCreateJobModal] = useState(false);
+  const [showCreateMotorModal, setShowCreateMotorModal] = useState(false);
 
   const navigation = [
     { name: 'Dashboard', icon: LayoutDashboard, key: 'dashboard' as ActiveView },
@@ -45,7 +51,11 @@ function App() {
   const renderActiveView = () => {
     switch (activeView) {
       case 'dashboard':
-        return <Dashboard />;
+        return <Dashboard 
+          onCreateCompany={() => setShowCreateCompanyModal(true)}
+          onCreateJob={() => setShowCreateJobModal(true)}
+          onCreateMotor={() => setShowCreateMotorModal(true)}
+        />;
       case 'companies':
         return <Companies />;
       case 'motors':
@@ -60,6 +70,9 @@ function App() {
         return <Reports />;
       default:
         return <Dashboard />;
+          onCreateCompany={() => setShowCreateCompanyModal(true)}
+          onCreateJob={() => setShowCreateJobModal(true)}
+          onCreateMotor={() => setShowCreateMotorModal(true)}
     }
   };
 
@@ -157,13 +170,19 @@ function App() {
 
             <div className="flex items-center space-x-4">
               <NotificationDropdown />
-              <ProfileDropdown />
+              <ProfileDropdown 
+                onViewProfile={() => console.log('View Profile')}
+                onSystemSettings={() => console.log('System Settings')}
+                onSecurity={() => console.log('Security')}
+                onHelp={() => console.log('Help & Support')}
+                onSignOut={() => console.log('Sign Out')}
+              />
             </div>
           </div>
         </div>
 
         {/* Page content */}
-        <main className="flex-1">
+        <main className="flex-1 min-h-screen">
           {renderActiveView()}
         </main>
       </div>
@@ -171,6 +190,43 @@ function App() {
       {/* Database Status Modal */}
       {showDatabaseStatus && (
         <DatabaseStatus onClose={() => setShowDatabaseStatus(false)} />
+      )}
+
+      {/* Global Modals */}
+      {showCreateCompanyModal && (
+        <CreateCompanyModal 
+          onClose={() => setShowCreateCompanyModal(false)}
+          onSuccess={() => {
+            setShowCreateCompanyModal(false);
+            if (activeView !== 'companies') {
+              setActiveView('companies');
+            }
+          }}
+        />
+      )}
+
+      {showCreateJobModal && (
+        <CreateJobModal 
+          onClose={() => setShowCreateJobModal(false)}
+          onSuccess={() => {
+            setShowCreateJobModal(false);
+            if (activeView !== 'jobs') {
+              setActiveView('jobs');
+            }
+          }}
+        />
+      )}
+
+      {showCreateMotorModal && (
+        <CreateMotorModal 
+          onClose={() => setShowCreateMotorModal(false)}
+          onSuccess={() => {
+            setShowCreateMotorModal(false);
+            if (activeView !== 'motors') {
+              setActiveView('motors');
+            }
+          }}
+        />
       )}
     </div>
   );

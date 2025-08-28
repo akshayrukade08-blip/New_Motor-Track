@@ -38,7 +38,11 @@ export const useCompanies = () => {
     try {
       const { data, error } = await supabase
         .from('companies')
-        .insert([company])
+        .insert([{
+          ...company,
+          motor_count: 0,
+          active_jobs: 0
+        }])
         .select()
         .single()
 
@@ -46,7 +50,9 @@ export const useCompanies = () => {
       setCompanies(prev => [data, ...prev])
       return data
     } catch (err) {
-      throw new Error(handleSupabaseError(err))
+      const errorMessage = handleSupabaseError(err)
+      console.error('Add company error:', errorMessage)
+      throw new Error(errorMessage)
     }
   }
 
@@ -116,7 +122,9 @@ export const useMotors = () => {
       await fetchMotors() // Refetch to get company data
       return data
     } catch (err) {
-      throw new Error(handleSupabaseError(err))
+      const errorMessage = handleSupabaseError(err)
+      console.error('Add motor error:', errorMessage)
+      throw new Error(errorMessage)
     }
   }
 
@@ -177,7 +185,9 @@ export const useJobs = () => {
       await fetchJobs() // Refetch to get related data
       return data
     } catch (err) {
-      throw new Error(handleSupabaseError(err))
+      const errorMessage = handleSupabaseError(err)
+      console.error('Add job error:', errorMessage)
+      throw new Error(errorMessage)
     }
   }
 
@@ -251,7 +261,9 @@ export const useInvoices = () => {
       await fetchInvoices() // Refetch to get related data
       return data
     } catch (err) {
-      throw new Error(handleSupabaseError(err))
+      const errorMessage = handleSupabaseError(err)
+      console.error('Add invoice error:', errorMessage)
+      throw new Error(errorMessage)
     }
   }
 

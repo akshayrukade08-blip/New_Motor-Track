@@ -45,8 +45,9 @@ const Companies = () => {
       setShowAddModal(false);
       e.currentTarget.reset();
     } catch (err) {
-      console.error('Failed to add company:', err);
-      alert('Failed to add company. Please try again.');
+      const errorMessage = err instanceof Error ? err.message : 'Failed to add company. Please try again.';
+      console.error('Failed to add company:', errorMessage);
+      alert(errorMessage);
     } finally {
       setIsSubmitting(false);
     }

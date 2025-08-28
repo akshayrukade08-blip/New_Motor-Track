@@ -12,7 +12,13 @@ import {
 } from 'lucide-react';
 import { useCompanies, useJobs, useInvoices, useWarranties } from '../hooks/useSupabase';
 
-const Dashboard = () => {
+interface DashboardProps {
+  onCreateCompany: () => void;
+  onCreateJob: () => void;
+  onCreateMotor: () => void;
+}
+
+const Dashboard: React.FC<DashboardProps> = ({ onCreateCompany, onCreateJob, onCreateMotor }) => {
   const { companies } = useCompanies();
   const { jobs } = useJobs();
   const { invoices } = useInvoices();
@@ -128,7 +134,10 @@ const Dashboard = () => {
             </p>
           </div>
           <div className="mt-4 sm:mt-0 flex space-x-2">
-            <button className="bg-white text-blue-600 px-4 py-2 rounded-lg font-medium hover:bg-blue-50 transition-colors flex items-center space-x-2">
+            <button 
+              onClick={onCreateCompany}
+              className="bg-white text-blue-600 px-4 py-2 rounded-lg font-medium hover:bg-blue-50 transition-colors flex items-center space-x-2"
+            >
               <Plus className="h-4 w-4" />
               <span>Add Company</span>
             </button>
@@ -204,15 +213,24 @@ const Dashboard = () => {
             <h2 className="text-xl font-bold text-gray-900">Quick Actions</h2>
           </div>
           <div className="p-6 space-y-4">
-            <button className="w-full bg-blue-600 text-white px-4 py-3 rounded-lg font-medium hover:bg-blue-700 transition-colors flex items-center justify-center space-x-2">
+            <button 
+              onClick={onCreateJob}
+              className="w-full bg-blue-600 text-white px-4 py-3 rounded-lg font-medium hover:bg-blue-700 transition-colors flex items-center justify-center space-x-2"
+            >
               <Plus className="h-5 w-5" />
               <span>Create New Job</span>
             </button>
-            <button className="w-full border border-gray-300 text-gray-700 px-4 py-3 rounded-lg font-medium hover:bg-gray-50 transition-colors flex items-center justify-center space-x-2">
+            <button 
+              onClick={onCreateCompany}
+              className="w-full border border-gray-300 text-gray-700 px-4 py-3 rounded-lg font-medium hover:bg-gray-50 transition-colors flex items-center justify-center space-x-2"
+            >
               <Building2 className="h-5 w-5" />
               <span>Add Company</span>
             </button>
-            <button className="w-full border border-gray-300 text-gray-700 px-4 py-3 rounded-lg font-medium hover:bg-gray-50 transition-colors flex items-center justify-center space-x-2">
+            <button 
+              onClick={onCreateMotor}
+              className="w-full border border-gray-300 text-gray-700 px-4 py-3 rounded-lg font-medium hover:bg-gray-50 transition-colors flex items-center justify-center space-x-2"
+            >
               <Settings className="h-5 w-5" />
               <span>Add Motor</span>
             </button>

@@ -1,3 +1,37 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Fix for mobile viewport and scrolling */
+html, body {
+  height: 100%;
+  overflow-x: hidden;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+/* Ensure proper z-index stacking */
+.fixed {
+  z-index: 50;
+}
+
+/* Smooth transitions for modals */
+.modal-backdrop {
+  backdrop-filter: blur(2px);
+}
+
+/* Fix for dropdown positioning */
+.dropdown-menu {
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+/* Responsive table fixes */
+@media (max-width: 768px) {
+  .table-responsive {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+}
