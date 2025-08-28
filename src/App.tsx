@@ -48,33 +48,34 @@ function App() {
     { name: 'Reports', icon: BarChart3, key: 'reports' as ActiveView },
   ];
 
-  const renderActiveView = () => {
-    switch (activeView) {
-      case 'dashboard':
-        return <Dashboard 
-          onCreateCompany={() => setShowCreateCompanyModal(true)}
-          onCreateJob={() => setShowCreateJobModal(true)}
-          onCreateMotor={() => setShowCreateMotorModal(true)}
-        />;
-      case 'companies':
-        return <Companies />;
-      case 'motors':
-        return <Motors />;
-      case 'jobs':
-        return <Jobs />;
-      case 'invoices':
-        return <Invoices />;
-      case 'warranties':
-        return <Warranties />;
-      case 'reports':
-        return <Reports />;
-      default:
-        return <Dashboard />;
-          onCreateCompany={() => setShowCreateCompanyModal(true)}
-          onCreateJob={() => setShowCreateJobModal(true)}
-          onCreateMotor={() => setShowCreateMotorModal(true)}
-    }
-  };
+const renderActiveView = () => {
+  switch (activeView) {
+    case 'dashboard':
+      return <Dashboard 
+        onCreateCompany={() => setShowCreateCompanyModal(true)}
+        onCreateJob={() => setShowCreateJobModal(true)}
+        onCreateMotor={() => setShowCreateMotorModal(true)}
+      />;
+    case 'companies':
+      return <Companies />;
+    case 'motors':
+      return <Motors />;
+    case 'jobs':
+      return <Jobs />;
+    case 'invoices':
+      return <Invoices />;
+    case 'warranties':
+      return <Warranties />;
+    case 'reports':
+      return <Reports />;
+    default:
+      return <Dashboard 
+        onCreateCompany={() => setShowCreateCompanyModal(true)}
+        onCreateJob={() => setShowCreateJobModal(true)}
+        onCreateMotor={() => setShowCreateMotorModal(true)}
+      />;
+  }
+};
 
   const getPageTitle = () => {
     const currentNav = navigation.find(nav => nav.key === activeView);
