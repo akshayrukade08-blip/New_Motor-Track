@@ -48,34 +48,34 @@ function App() {
     { name: 'Reports', icon: BarChart3, key: 'reports' as ActiveView },
   ];
 
-const renderActiveView = () => {
-  switch (activeView) {
-    case 'dashboard':
-      return <Dashboard 
-        onCreateCompany={() => setShowCreateCompanyModal(true)}
-        onCreateJob={() => setShowCreateJobModal(true)}
-        onCreateMotor={() => setShowCreateMotorModal(true)}
-      />;
-    case 'companies':
-      return <Companies />;
-    case 'motors':
-      return <Motors />;
-    case 'jobs':
-      return <Jobs />;
-    case 'invoices':
-      return <Invoices />;
-    case 'warranties':
-      return <Warranties />;
-    case 'reports':
-      return <Reports />;
-    default:
-      return <Dashboard 
-        onCreateCompany={() => setShowCreateCompanyModal(true)}
-        onCreateJob={() => setShowCreateJobModal(true)}
-        onCreateMotor={() => setShowCreateMotorModal(true)}
-      />;
-  }
-};
+  const renderActiveView = () => {
+    switch (activeView) {
+      case 'dashboard':
+        return <Dashboard 
+          onCreateCompany={() => setShowCreateCompanyModal(true)}
+          onCreateJob={() => setShowCreateJobModal(true)}
+          onCreateMotor={() => setShowCreateMotorModal(true)}
+        />;
+      case 'companies':
+        return <Companies />;
+      case 'motors':
+        return <Motors />;
+      case 'jobs':
+        return <Jobs />;
+      case 'invoices':
+        return <Invoices />;
+      case 'warranties':
+        return <Warranties />;
+      case 'reports':
+        return <Reports />;
+      default:
+        return <Dashboard 
+          onCreateCompany={() => setShowCreateCompanyModal(true)}
+          onCreateJob={() => setShowCreateJobModal(true)}
+          onCreateMotor={() => setShowCreateMotorModal(true)}
+        />;
+    }
+  };
 
   const getPageTitle = () => {
     const currentNav = navigation.find(nav => nav.key === activeView);
@@ -83,7 +83,7 @@ const renderActiveView = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="flex min-h-screen bg-gray-50">
       {/* Mobile sidebar backdrop */}
       {sidebarOpen && (
         <div 
@@ -93,7 +93,7 @@ const renderActiveView = () => {
       )}
 
       {/* Sidebar */}
-      <div className={`fixed inset-y-0 left-0 z-50 w-64 bg-white shadow-lg transform transition-transform duration-300 ease-in-out lg:translate-x-0 lg:static lg:inset-0 ${
+      <div className={`fixed inset-y-0 left-0 z-50 w-64 bg-white shadow-lg transform transition-transform duration-300 ease-in-out lg:relative lg:translate-x-0 lg:inset-0 ${
         sidebarOpen ? 'translate-x-0' : '-translate-x-full'
       }`}>
         <div className="flex items-center justify-between h-16 px-6 border-b border-gray-200">
@@ -153,7 +153,7 @@ const renderActiveView = () => {
       </div>
 
       {/* Main content */}
-      <div className="lg:pl-64">
+      <div className="flex-1 flex flex-col lg:ml-0">
         {/* Top header */}
         <div className="sticky top-0 z-30 bg-white border-b border-gray-200">
           <div className="flex items-center justify-between h-16 px-4 lg:px-6">
@@ -183,7 +183,7 @@ const renderActiveView = () => {
         </div>
 
         {/* Page content */}
-        <main className="flex-1 min-h-screen">
+        <main className="flex-1">
           {renderActiveView()}
         </main>
       </div>
