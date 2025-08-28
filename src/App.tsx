@@ -39,11 +39,21 @@ export interface CompanyFormData {
 }
 
 export interface MotorFormData {
+  company_id: string;
+  motor_id: string;
+  manufacturer: string;
   model: string;
-  serialNumber: string;
-  power: string;
+  serial_number: string;
+  type: string;
   voltage: string;
-  // Add other motor fields as needed
+  amperage: string;
+  power: string;
+  phase: string;
+  frequency: string;
+  rpm: string;
+  condition: string;
+  location: string;
+  technical_notes: string;
 }
 
 export interface JobFormData {
