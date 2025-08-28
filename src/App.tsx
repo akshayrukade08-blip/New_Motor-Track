@@ -9,7 +9,6 @@ import {
   BarChart3,
   Menu,
   X,
-  Bell,
   Database
 } from 'lucide-react';
 
@@ -30,6 +29,30 @@ import CreateMotorModal from './components/CreateMotorModal';
 
 type ActiveView = 'dashboard' | 'companies' | 'motors' | 'jobs' | 'invoices' | 'warranties' | 'reports';
 
+// Define types for form data to maintain state between steps
+export interface CompanyFormData {
+  name: string;
+  email: string;
+  phone: string;
+  address: string;
+  // Add other company fields as needed
+}
+
+export interface MotorFormData {
+  model: string;
+  serialNumber: string;
+  power: string;
+  voltage: string;
+  // Add other motor fields as needed
+}
+
+export interface JobFormData {
+  title: string;
+  description: string;
+  priority: string;
+  // Add other job fields as needed
+}
+
 function App() {
   const [activeView, setActiveView] = useState<ActiveView>('dashboard');
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -37,6 +60,27 @@ function App() {
   const [showCreateCompanyModal, setShowCreateCompanyModal] = useState(false);
   const [showCreateJobModal, setShowCreateJobModal] = useState(false);
   const [showCreateMotorModal, setShowCreateMotorModal] = useState(false);
+  
+  // State to hold form data between steps
+  const [companyFormData, setCompanyFormData] = useState<CompanyFormData>({
+    name: '',
+    email: '',
+    phone: '',
+    address: ''
+  });
+  
+  const [motorFormData, setMotorFormData] = useState<MotorFormData>({
+    model: '',
+    serialNumber: '',
+    power: '',
+    voltage: ''
+  });
+  
+  const [jobFormData, setJobFormData] = useState<JobFormData>({
+    title: '',
+    description: '',
+    priority: ''
+  });
 
   const navigation = [
     { name: 'Dashboard', icon: LayoutDashboard, key: 'dashboard' as ActiveView },
@@ -80,6 +124,36 @@ function App() {
   const getPageTitle = () => {
     const currentNav = navigation.find(nav => nav.key === activeView);
     return currentNav ? currentNav.name : 'Dashboard';
+  };
+
+  // Reset form data when modals are closed
+  const handleCloseCompanyModal = () => {
+    setCompanyFormData({
+      name: '',
+      email: '',
+      phone: '',
+      address: ''
+    });
+    setShowCreateCompanyModal(false);
+  };
+
+  const handleCloseMotorModal = () => {
+    setMotorFormData({
+      model: '',
+      serialNumber: '',
+      power: '',
+      voltage: ''
+    });
+    setShowCreateMotorModal(false);
+  };
+
+  const handleCloseJobModal = () => {
+    setJobFormData({
+      title: '',
+      description: '',
+      priority: ''
+    });
+    setShowCreateJobModal(false);
   };
 
   return (
@@ -196,37 +270,43 @@ function App() {
       {/* Global Modals */}
       {showCreateCompanyModal && (
         <CreateCompanyModal 
-          onClose={() => setShowCreateCompanyModal(false)}
+          onClose={handleCloseCompanyModal}
           onSuccess={() => {
-            setShowCreateCompanyModal(false);
+            handleCloseCompanyModal();
             if (activeView !== 'companies') {
               setActiveView('companies');
             }
           }}
+          formData={companyFormData}
+          setFormData={setCompanyFormData}
         />
       )}
 
       {showCreateJobModal && (
         <CreateJobModal 
-          onClose={() => setShowCreateJobModal(false)}
+          onClose={handleCloseJobModal}
           onSuccess={() => {
-            setShowCreateJobModal(false);
+            handleCloseJobModal();
             if (activeView !== 'jobs') {
               setActiveView('jobs');
             }
           }}
+          formData={jobFormData}
+          setFormData={setJobFormData}
         />
       )}
 
       {showCreateMotorModal && (
         <CreateMotorModal 
-          onClose={() => setShowCreateMotorModal(false)}
+          onClose={handleCloseMotorModal}
           onSuccess={() => {
-            setShowCreateMotorModal(false);
+            handleCloseMotorModal();
             if (activeView !== 'motors') {
               setActiveView('motors');
             }
           }}
+          formData={motorFormData}
+          setFormData={setMotorFormData}
         />
       )}
     </div>
