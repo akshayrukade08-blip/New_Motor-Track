@@ -62,8 +62,9 @@ const Motors = () => {
       setActiveTab(0);
       e.currentTarget.reset();
     } catch (err) {
-      console.error('Failed to add motor:', err);
-      alert('Failed to add motor. Please try again.');
+      const errorMessage = err instanceof Error ? err.message : 'Failed to add motor. Please try again.';
+      console.error('Failed to add motor:', errorMessage);
+      alert(errorMessage);
     } finally {
       setIsSubmitting(false);
     }

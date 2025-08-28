@@ -1,34 +1,48 @@
 import React, { useState } from 'react'
 import { User, Settings, LogOut, HelpCircle, Shield, ChevronDown } from 'lucide-react'
 
-const ProfileDropdown = () => {
+interface ProfileDropdownProps {
+  onViewProfile: () => void;
+  onSystemSettings: () => void;
+  onSecurity: () => void;
+  onHelp: () => void;
+  onSignOut: () => void;
+}
+
+const ProfileDropdown: React.FC<ProfileDropdownProps> = ({
+  onViewProfile,
+  onSystemSettings,
+  onSecurity,
+  onHelp,
+  onSignOut
+}) => {
   const [isOpen, setIsOpen] = useState(false)
 
   const menuItems = [
     {
       icon: User,
       label: 'Profile Settings',
-      action: () => console.log('Profile Settings clicked')
+      action: onViewProfile
     },
     {
       icon: Settings,
       label: 'System Settings',
-      action: () => console.log('System Settings clicked')
+      action: onSystemSettings
     },
     {
       icon: Shield,
       label: 'Security',
-      action: () => console.log('Security clicked')
+      action: onSecurity
     },
     {
       icon: HelpCircle,
       label: 'Help & Support',
-      action: () => console.log('Help & Support clicked')
+      action: onHelp
     },
     {
       icon: LogOut,
       label: 'Sign Out',
-      action: () => console.log('Sign Out clicked'),
+      action: onSignOut,
       className: 'text-red-600 hover:text-red-700 hover:bg-red-50'
     }
   ]
